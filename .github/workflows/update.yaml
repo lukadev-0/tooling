@@ -24,7 +24,7 @@ jobs:
         with:
           ref: update-trunk
       - name: Setup pesde
-        uses: axiom-co/setup-pesde@b690699
+        uses: axiom-co/setup-pesde@b690699ace34169731b6b2a1c93b2008472038a7
         with:
           cache: true
       - name: Install dependencies
@@ -52,7 +52,7 @@ jobs:
         with:
           ref: update-trunk
       - name: Setup pesde
-        uses: axiom-co/setup-pesde@b690699
+        uses: axiom-co/setup-pesde@b690699ace34169731b6b2a1c93b2008472038a7
         with:
           cache: true
       - name: Install dependencies
