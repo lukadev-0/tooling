@@ -30,7 +30,9 @@ jobs:
       - name: Install dependencies
         run: pesde install
       - name: Update branch
-        run: git merge -X theirs main
+        run: |
+          git fetch origin main
+          git merge -X theirs origin/main
           
       - name: Fetch new versions
         id: new_versions
