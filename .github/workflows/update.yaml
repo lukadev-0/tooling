@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      new_version: ${{ steps.new_version.outputs.new_versions }}
+      new_versions: ${{ steps.new_versions.outputs.new_versions }}
 
     steps:
       - name: Checkout
@@ -50,7 +50,7 @@ jobs:
     needs: fetch-new-versions
     strategy:
       matrix:
-        include: ${{ fromJSON(needs.fetch-new-versions.outputs.new_version) }}
+        include: ${{ fromJSON(needs.fetch-new-versions.outputs.new_versions) }}
 
     steps:
       - name: Checkout
