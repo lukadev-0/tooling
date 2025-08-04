@@ -72,7 +72,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           echo '${{ toJson(matrix.versions) }}' | jq -r '.[]' | while read -r version; do
-            local branch="update/${{ matrix.package }}/$version"
+            branch="update/${{ matrix.package }}/$version"
 
             # Switch to new branch
             git switch -c "$branch"
