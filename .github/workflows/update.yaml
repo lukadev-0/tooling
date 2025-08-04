@@ -48,6 +48,7 @@ jobs:
     runs-on: ubuntu-latest
 
     needs: fetch-new-versions
+    if: needs.fetch-new-versions.outputs.new_versions != '[]'
     strategy:
       matrix:
         include: ${{ fromJSON(needs.fetch-new-versions.outputs.new_versions) }}
