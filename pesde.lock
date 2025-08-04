@@ -5,14 +5,14 @@ name = "pesde/tooling"
 version = "0.1.0"
 target = "lune"
 
+[workspace."lukadev_0/blink"]
+lune = "bins/blink"
+
 [workspace."pesde/argon"]
 lune = "bins/argon"
 
 [workspace."pesde/asphalt"]
 lune = "bins/asphalt"
-
-[workspace."pesde/blink"]
-lune = "bins/blink"
 
 [workspace."pesde/darklua"]
 lune = "bins/darklua"
