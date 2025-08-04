@@ -29,6 +29,9 @@ jobs:
           cache: true
       - name: Install dependencies
         run: pesde install
+      - name: Update branch
+        run: git merge -X theirs main
+          
       - name: Fetch new versions
         id: new_versions
         env:
