@@ -39,6 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          lune -V
           new_versions="$(lune run update_tools -- --json | jq -c 'to_entries | map({ package: .key, versions: .value })')"
           echo "new_versions=$new_versions" >> "$GITHUB_OUTPUT"
 
