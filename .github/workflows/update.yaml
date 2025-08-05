@@ -93,7 +93,7 @@ jobs:
           git push --force origin "$branch"
 
           # Create/Edit PR
-          if gh pr view > /dev/null 2>&1; then
+          if gh pr view --json state --jq '.state' 2>/dev/null | grep -q "OPEN"; then
             pr_command="edit"
             echo "Editing PR..."
           else
@@ -105,4 +105,5 @@ jobs:
 
           gh pr "$pr_command" \
             --title "${{ matrix.package }}: $latest_version" \
-            --body "$(printf "$pr_body")"
+            --body "$(printf "$pr_body")" \
+            >> $GITHUB_STEP_SUMMARY
