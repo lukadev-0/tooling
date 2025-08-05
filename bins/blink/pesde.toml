@@ -1,4 +1,4 @@
-name = "pesde/blink"
+name = "lukadev_0/blink"
 version = "0.17.2"
 description = "An IDL compiler written in Luau for ROBLOX buffer networking"
 authors = ["CompeyDev <hi@devcomp.xyz>", "Axen <axen@frombloxware.com>"]
