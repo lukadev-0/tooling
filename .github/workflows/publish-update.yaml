@@ -18,10 +18,22 @@ jobs:
         uses: axiom-co/setup-pesde@b690699ace34169731b6b2a1c93b2008472038a7
         with:
           cache: true
-      - name: Install dependencies
-        run: pesde install --locked
       - name: Publish
-        env:
-          E: ${{ toJSON(github.event) }}
         run: |
-          echo "$E" > "$GITHUB_STEP_SUMMARY"
+          branch="${{ github.head_ref }}"
+          package="${branch#update/}"
+
+          echo "Publishing '$package'..."
+          cd "bins/$package"
+
+          # Fetch & loop through commits
+          response=$(curl "${{ github.event.pull_request.commits_url }}")
+          commits="$(echo "$response" | jq -r '.[].sha')"
+          while read -r commit; do
+            # Fetch & checkout the commit
+            git fetch origin "$commit"
+            git checkout "$commit"
+            
+            # Publish
+            pesde publish -y
+          done <<< "$commits"
