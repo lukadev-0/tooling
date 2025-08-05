@@ -19,8 +19,11 @@ jobs:
         with:
           cache: true
       - name: Publish
+        id: publish
+        continue-on-error: true
         env:
           PESDE_TOKEN: ${{ secrets.PESDE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           branch="${{ github.head_ref }}"
           package="${branch#update/}"
@@ -31,6 +34,9 @@ jobs:
           # Set pesde token
           pesde auth login --token "$PESDE_TOKEN"
 
+          # Output published packages
+          echo "published<<EOF" >> "$GITHUB_OUTPUT"
+
           # Fetch & loop through commits
           response=$(curl "${{ github.event.pull_request.commits_url }}")
           commits="$(echo "$response" | jq -r '.[].sha')"
@@ -38,7 +44,43 @@ jobs:
             # Fetch & checkout the commit
             git fetch origin "$commit"
             git checkout "$commit"
+
+            manifest="$(lune run - <<EOF
+          local fs = require("@lune/fs")
+          local serde = require("@lune/serde")
+          print(serde.encode("json", serde.decode("toml", fs.readFile("pesde.toml"))))
+          EOF
+            )"
+
+            echo "$manifest" | jq -c '{name, version}' >> "$GITHUB_OUTPUT"
             
             # Publish
             pesde publish -y
           done <<< "$commits"
+
+          echo "EOF" >> "$GITHUB_OUTPUT"
+      - name: Report result
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          outcome="${{ steps.publish.outcome }}"
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          output=""
+
+          if [ "$outcome" = "success" ]; then
+            published="${{ steps.publish.outputs.published }}"
+
+            output+=$'🚀 **Published new versions**\n\n'
+            output+="$(echo "$published" | jq -r '"- [\(.name)@\(.version)](https://pesde.dev/packages/\(.name)/\(.version)/any)"')"
+          elif [ "$outcome" = "failure" ]; then
+            output+="❌ I couldn't publish the packages."$'\n\n'
+            output+="[View Logs]($run_url)"
+          else
+            echo "Outcome is neither success or failure: $outcome"
+            exit
+          fi
+
+          echo "$output" >> "$GITHUB_STEP_SUMMARY"
+
+          gh pr comment ${{ github.event.number }} --body "$output"

@@ -70,8 +70,8 @@ jobs:
           # Build PR body
           pr_body=""
 
-          pr_body+="**🤖 This PR is automatically generated.**\n\n"
-          pr_body+="It contains the following new versions for \`${{ matrix.package }}\` as separate commits.\n\n"
+          pr_body+=$'**🤖 This PR is automatically generated.**\n\n'
+          pr_body+=$'It contains the following new versions for `${{ matrix.package }}` as separate commits.\n\n'
 
           versions="$(echo '${{ toJson(matrix.versions) }}' | jq -r '.[]')"
           while read -r version; do
@@ -84,10 +84,10 @@ jobs:
             git commit -m "${{ matrix.package }}: $version"
 
             commit_hash=$(git rev-parse HEAD)
-            pr_body+="- $commit_hash - $version\n"
+            pr_body+="- $commit_hash - $version"$'\n'
           done <<< "$versions"
 
-          pr_body+="\n"
+          pr_body+=$'\n'
           pr_body+="Merging this PR will automatically publish the new package versions."
 
           # Push changes
@@ -106,5 +106,5 @@ jobs:
 
           gh pr "$pr_command" \
             --title "${{ matrix.package }}: $latest_version" \
-            --body "$(printf "$pr_body")" \
+            --body "$pr_body" \
             >> $GITHUB_STEP_SUMMARY
