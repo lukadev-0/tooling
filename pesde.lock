@@ -5,6 +5,9 @@ name = "pesde/tooling"
 version = "0.1.0"
 target = "lune"
 
+[workspace."lukadev_0/rojo"]
+lune = "bins/rojo"
+
 [workspace."lukadev_0/selene"]
 lune = "bins/selene"
 
@@ -28,9 +31,6 @@ lune = "bins/luau-lsp"
 
 [workspace."pesde/mantle"]
 lune = "bins/mantle"
-
-[workspace."pesde/rojo"]
-lune = "bins/rojo"
 
 [workspace."pesde/toolchainlib"]
 lune = "toolchainlib"
