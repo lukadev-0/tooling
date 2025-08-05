@@ -7,7 +7,7 @@
 	</h1>
 </div>
 
-A deterministic code formatter for Lua 5.1, 5.2, 5.3, 5.4, LuaJIT, [Luau](https://luau.org/) and [CfxLua/FiveM Lua](https://docs.fivem.net/docs/scripting-manual/runtimes/lua/), built using [full-moon](https://github.com/Kampfkarren/full-moon).
+A deterministic code formatter for Lua 5.1, 5.2, 5.3, 5.4, LuaJIT and [Luau](https://luau.org/), built using [full-moon](https://github.com/Kampfkarren/full-moon).
 StyLua is inspired by the likes of [prettier](https://github.com/prettier/prettier), it parses your Lua codebase, and prints it back out from scratch,
 enforcing a consistent code style.
 
@@ -60,7 +60,7 @@ Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
 - repo: https://github.com/JohnnyMorganz/StyLua
-  rev: v2.1.0
+  rev: v2.0.1
   hooks:
     - id: stylua # or stylua-system / stylua-github
 ```
@@ -84,7 +84,7 @@ StyLua is available on the [Docker Hub](https://hub.docker.com/r/johnnymorganz/s
 If you are using Docker, the easiest way to install StyLua is:
 
 ```dockerfile
-COPY --from=JohnnyMorganz/StyLua:2.1.0 /stylua /usr/bin/stylua
+COPY --from=JohnnyMorganz/StyLua:2.0.1 /stylua /usr/bin/stylua
 ```
 
 ### Homebrew
@@ -101,7 +101,7 @@ brew install stylua
 - [Aftman](https://github.com/LPGhatguy/aftman)
 
 ```sh
-aftman add johnnymorganz/stylua@2.1.0
+aftman add johnnymorganz/stylua@2.0.1
 ```
 
 - A community maintained package repository. Please note, these packages are maintained by third-parties and we do not control their packaging manifests.
@@ -114,7 +114,6 @@ Note that these integrations require the StyLua binary to already be installed a
 
 - Sublime: [Sublime Text Package](https://github.com/aerobounce/Sublime-Pretty-Lua)
 - Neovim: [stylua-nvim](https://github.com/ckipp01/stylua-nvim) / [stylua.nvim](https://github.com/wesleimp/stylua.nvim)
-- Zed: [Zed Lua StyLua formatter settings](https://zed.dev/docs/languages/lua#stylua)
 
 ## Usage
 
@@ -154,15 +153,6 @@ vendor/
 ```
 
 running `stylua .` will ignore the `vendor/` directory.
-
-### Filtering when using stdin
-
-If you are formatting stdin by specifying `-` as the filename (usually as part of an editor integration)
-you can optionally provide the filename via `--stdin-filepath`. To respect glob or `.styluaignore` filtering, pass `--respect-ignores`.
-
-```stylua
-stylua --respect-ignores --stdin-filepath src/foo.lua -
-```
 
 ### `--check`: Checking files for formatting
 
@@ -285,7 +275,7 @@ StyLua only offers the following options:
 
 | Option                       | Default            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `syntax`                     | `All`              | Specify a disambiguation for the style of Lua syntax being formatted. Possible options: `All` (default), `Lua51`, `Lua52`, `Lua53`, `Lua54`, `LuaJIT`, `Luau`, `CfxLua`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `syntax`                     | `All`              | Specify a disambiguation for the style of Lua syntax being formatted. Possible options: `All` (default), `Lua51`, `Lua52`, `Lua53`, `Lua54`, `LuaJIT`, `Luau`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `column_width`               | `120`              | Approximate line length for printing. Used as a guide for line wrapping - this is not a hard requirement: lines may fall under or over the limit.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `line_endings`               | `Unix`             | Line endings type. Possible options: `Unix` (LF) or `Windows` (CRLF)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `indent_type`                | `Tabs`             | Indent type. Possible options: `Tabs` or `Spaces`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
