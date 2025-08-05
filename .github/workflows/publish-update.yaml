@@ -1,0 +1,25 @@
+name: Publish updated tools
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  publish-updated-tools:
+    name: Publish updated tools
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'update/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup pesde
+        uses: axiom-co/setup-pesde@b690699ace34169731b6b2a1c93b2008472038a7
+        with:
+          cache: true
+      - name: Install dependencies
+        run: pesde install --locked
+      - name: Publish
+        run: |
+          echo "${{ toJSON(github.event) }}"
