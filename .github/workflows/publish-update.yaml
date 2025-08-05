@@ -19,12 +19,17 @@ jobs:
         with:
           cache: true
       - name: Publish
+        env:
+          PESDE_TOKEN: ${{ secrets.PESDE_TOKEN }}
         run: |
           branch="${{ github.head_ref }}"
           package="${branch#update/}"
 
           echo "Publishing '$package'..."
           cd "bins/$package"
+
+          # Set pesde token
+          pesde auth login --token "$PESDE_TOKEN"
 
           # Fetch & loop through commits
           response=$(curl "${{ github.event.pull_request.commits_url }}")
