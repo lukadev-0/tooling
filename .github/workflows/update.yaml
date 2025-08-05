@@ -65,6 +65,14 @@ jobs:
           # List all branches that start with `update/`
           branches="$(git ls-remote --heads origin 'update/*' | awk '{print $2}')"
 
+          # Switch to latest branch, create it if it doesn't exist
+          latest_branch="update/${{ matrix.package }}/latest"
+          if echo "$branches" | grep -Fxq "refs/heads/$latest_branch"; then
+            git switch "$latest_branch"
+          else
+            git switch -c "$latest_branch"
+          fi
+
           echo '${{ toJson(matrix.versions) }}' | jq -r '.[]' | while read -r version; do
             branch="update/${{ matrix.package }}/$version"
             
@@ -75,7 +83,7 @@ jobs:
             fi
 
             # Switch to new branch
-            git switch -c "$branch" "${{ github.ref }}"
+            git switch -c "$branch"
 
             # Perform the update
             lune run update_tools -- "${{ matrix.package }}" "$version"
@@ -96,3 +104,7 @@ jobs:
           EOF
 
           done
+
+          git switch "$latest_branch"
+          git reset --hard "$branch"
+          git push --force origin "$latest_branch"
