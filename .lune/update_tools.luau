@@ -97,7 +97,6 @@ type VersionChange = {
 local function getPackage(packagePath: pathfs.Path): Package
 	local entrypointPath = packagePath:join("init.luau")
 	local manifestPath = packagePath:join("pesde.toml")
-	local readmePath = packagePath:join("README.md")
 
 	assert(
 		pathfs.isFile(entrypointPath) and pathfs.isFile(manifestPath),
@@ -161,7 +160,7 @@ local function fetchNewPackageVersions(packages: PackageMap): { [string]: { stri
 				end)
 
 				-- Find new releases
-				local newReleases = {}
+				local newVersions = {}
 				local versionIdx = math.huge
 				for idx, release in releases do
 					if stripLeadingVersion(release.tag_name) == package.manifest.version then
@@ -170,13 +169,8 @@ local function fetchNewPackageVersions(packages: PackageMap): { [string]: { stri
 					end
 
 					if idx > versionIdx then
-						newReleases[release.tag_name] = release
+						table.insert(newVersions, release.tag_name)
 					end
-				end
-
-				local newVersions = {}
-				for _, release in newReleases do
-					table.insert(newVersions, release.tag_name)
 				end
 
 				if #newVersions > 0 then
