@@ -10,6 +10,10 @@ concurrency:
   # Ensure this workflow does not run twice at the same time
   group: ${{ github.workflow }}
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   fetch-new-versions:
     name: Fetch new versions
