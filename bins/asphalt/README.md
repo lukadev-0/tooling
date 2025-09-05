@@ -3,9 +3,6 @@
 Asphalt is a command line tool used to upload assets to Roblox and easily reference them in code.
 It's a modern alternative to [Tarmac](https://github.com/Roblox/Tarmac).
 
-> [!IMPORTANT]
-> This documentation is for the pre-release of Asphalt 1.0. Older versions are no longer supported or working due to Roblox API changes.
-
 ## Features
 
 -   Syncs your images, sounds, [videos](#videos), [animations](#animations), and [3D models](#models) to Roblox
@@ -19,25 +16,10 @@ It's a modern alternative to [Tarmac](https://github.com/Roblox/Tarmac).
 
 ## Installation
 
-### [Homebrew](https://brew.sh) (macOS/Linux)
-
-> [!WARNING]
-> Does not include pre-releases.
+### [Mise](https://mise.jdx.dev)
 
 ```bash
-brew tap jacktabscode/tap
-brew install asphalt
-```
-
-### [Pesde](https://github.com/pesde-pkg/pesde)
-```bash
-pesde add --dev pesde/asphalt --target lune
-```
-
-### [Aftman](https://github.com/lpghatguy/aftman) or [Rokit](https://github.com/rojo-rbx/rokit)
-
-```bash
-aftman add jacktabscode/asphalt
+mise use ubi:jacktabscode/asphalt
 ```
 
 ### [Cargo](https://crates.io/crates/asphalt) (build from source)
@@ -46,7 +28,31 @@ aftman add jacktabscode/asphalt
 cargo install asphalt
 ```
 
+<details>
+<summary>View other installation options</summary>
+
+### [Pesde](https://github.com/pesde-pkg/pesde)
+
+```bash
+pesde add --dev pesde/asphalt --target lune
+```
+
+### [Rokit](https://github.com/rojo-rbx/rokit)
+
+```bash
+rokit add jacktabscode/asphalt
+```
+
+### [Homebrew](https://brew.sh) (macOS/Linux)
+
+```bash
+brew tap jacktabscode/tap
+brew install asphalt
+```
+
 [Asphalt cannot be installed with Foreman.](https://github.com/Roblox/foreman/issues/97)
+
+</details>
 
 ## Commands
 
@@ -87,7 +93,7 @@ Uploads a single asset to Roblox. See `asphalt upload --help` for more informati
 Asphalt is configured with a project file called `asphalt.toml`. It is required for the program to run.
 
 <details>
-<summary>Example</summary>
+<summary>See an example</summary>
 
 ```toml
 [creator]
