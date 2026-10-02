@@ -1,7 +1,10 @@
 <div align="center">
-  <img src="./docs/assets/Logo.png" class="center">
+  <img src="./docs/public/Logo.png" class="center">
 </div>
-<h1>Blink</h1>
+
+[![GitHub License](https://img.shields.io/github/license/1Axen/blink?style=flat-square&color=%23a350af)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/1Axen/blink?style=flat-square&color=%23a350af)](https://github.com/1Axen/blink/releases/latest)
+
 An IDL compiler written in Luau for ROBLOX buffer networking
 
 # Performance
@@ -11,15 +14,15 @@ It means lower bandwidth usage directly resulting in **lower ping\*** experience
 
 *\* In comparison to standard ROBLOX networking, this may not always be the case but should never result in increased ping times.*
 
-Benchmarks are available [here](https://1axen.github.io/blink/Benchmarks).
+Benchmarks are available here [here](./benchmark/Benchmarks.md).
 
 # Security
 Blink does two things to combat bad actors:
 1. Data sent by clients will be **validated** on the receiving side before  reaching any critical game code.
-2. As a result of the compression done by Blink it becomes **harder** to snoop on your game's network traffic. .
+2. As a result of the compression done by Blink it becomes **significantly harder** to snoop on your game's network traffic. Long gone are the days of skids using RemoteSpy to snoop on your game's traffic.
 
 # Get Started
-Head over to the [installation](https://1axen.github.io/blink/Installation) page to get started with Blink.
+Head over to the [installation](https://1axen.github.io/blink/getting-started/1-installation) page to get started with Blink.
 
 # Credits
 Credits to [Zap](https://zap.redblox.dev/) for the range and array syntax  
