@@ -25,12 +25,11 @@ Rojo enables:
 * Versioning your game, library, or plugin using Git or another VCS
 * Streaming `rbxmx` and `rbxm` models into your game in real time
 * Packaging and deploying your project to Roblox.com from the command line
+* Pulling Instances from Roblox place and model files back into an existing Rojo project with `rojo syncback`
 
-In the future, Rojo will be able to:
+Rojo also has an optional two-way sync setting in the Studio plugin for syncing supported Studio edits back to the filesystem.
 
-* Sync instances from Roblox Studio to the filesystem
-* Automatically convert your existing game to work with Rojo
-* Import custom instances like MoonScript code
+Some workflows, like fully automatic conversion of every existing game into a Rojo project, are still limited and may require manual project configuration.
 
 ## [Documentation](https://rojo.space/docs)
 Documentation is hosted in the [rojo.space repository](https://github.com/rojo-rbx/rojo.space).
@@ -40,7 +39,7 @@ Check out our [contribution guide](CONTRIBUTING.md) for detailed instructions fo
 
 Pull requests are welcome!
 
-Rojo supports Rust 1.83 and newer. The minimum supported version of Rust is based on the latest versions of the dependencies that Rojo has.
+Rojo supports Rust 1.88 and newer. The minimum supported version of Rust is based on the latest versions of the dependencies that Rojo has.
 
 ## License
 Rojo is available under the terms of the Mozilla Public License, Version 2.0. See [LICENSE.txt](LICENSE.txt) for details.
