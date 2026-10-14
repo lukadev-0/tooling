@@ -60,7 +60,7 @@ Add the following to your `.pre-commit-config.yaml` file:
 
 ```yaml
 - repo: https://github.com/JohnnyMorganz/StyLua
-  rev: v2.5.2
+  rev: v2.6.0
   hooks:
     - id: stylua # or stylua-system / stylua-github
 ```
@@ -84,7 +84,7 @@ StyLua is available on the [Docker Hub](https://hub.docker.com/r/johnnymorganz/s
 If you are using Docker, the easiest way to install StyLua is:
 
 ```dockerfile
-COPY --from=JohnnyMorganz/StyLua:2.5.2 /stylua /usr/bin/stylua
+COPY --from=JohnnyMorganz/StyLua:2.6.0 /stylua /usr/bin/stylua
 ```
 
 ### Homebrew
@@ -110,7 +110,7 @@ uv tool install git+https://github.com/johnnymorganz/stylua
 - [Aftman](https://github.com/LPGhatguy/aftman)
 
 ```sh
-aftman add johnnymorganz/stylua@2.5.2
+aftman add johnnymorganz/stylua@2.6.0
 ```
 
 - A community maintained package repository. Please note, these packages are maintained by third-parties and we do not control their packaging manifests.
@@ -122,7 +122,7 @@ aftman add johnnymorganz/stylua@2.5.2
 Note that these integrations require the StyLua binary to already be installed and available on your system.
 
 - Sublime: [Sublime Text Package](https://github.com/aerobounce/Sublime-Pretty-Lua)
-- Neovim: [stylua-nvim](https://github.com/ckipp01/stylua-nvim) / [stylua.nvim](https://github.com/wesleimp/stylua.nvim)
+- Neovim: [stylua-nvim](https://github.com/ckipp01/stylua-nvim) / [stylua.nvim](https://github.com/wesleimp/stylua.nvim) / [conform.nvim](https://github.com/stevearc/conform.nvim)
 - Zed: [Zed Lua StyLua formatter settings](https://zed.dev/docs/languages/lua#stylua)
 
 ## Usage
@@ -237,8 +237,9 @@ In editors, `Format Selection` is supported.
 StyLua has built-in support for sorting require statements. We group consecutive require statements into a single "block",
 and then requires are sorted only within that block. Blocks of requires do not move around the file.
 
-StyLua only considers requires of the form `local NAME = require(EXPR)`, and sorts lexicographically based on `NAME`.
-(StyLua can also sort Roblox services of the form `local NAME = game:GetService(EXPR)`)
+StyLua only considers requires of the form `local NAME = require(EXPR)`, or `const NAME = require(EXPR)` in Luau,
+and sorts lexicographically based on `NAME`.
+(StyLua can also sort Roblox services of the form `local NAME = game:GetService(EXPR)`, or `const NAME = game:GetService(EXPR)` in Luau)
 
 Requires sorting is off by default. To enable it, add the following to your `stylua.toml`:
 
@@ -308,6 +309,9 @@ Alternatively, you can specify it on the command line, with `stylua --syntax lua
 
 StyLua only offers the following options:
 
+> [!NOTE]  
+> When specifying the option on the command line, replace the underscore with a dash, e.g., `indent_type` becomes `--indent-type`.
+
 | Option                       | Default            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `syntax`                     | `All`              | Specify a disambiguation for the style of Lua syntax being formatted. Possible options: `All` (default), `Lua51`, `Lua52`, `Lua53`, `Lua54`, `LuaJIT`, `Luau`, `CfxLua`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -319,7 +323,7 @@ StyLua only offers the following options:
 | `call_parentheses`           | `Always`           | Whether parentheses should be applied on function calls with a single string/table argument. Possible options: `Always`, `NoSingleString`, `NoSingleTable`, `None`, `Input`. `Always` applies parentheses in all cases. `NoSingleString` omits parentheses on calls with a single string argument. Similarly, `NoSingleTable` omits parentheses on calls with a single table argument. `None` omits parentheses in both cases. Note: parentheses are still kept in situations where removal can lead to obscurity (e.g. `foo "bar".setup -> foo("bar").setup`, since the index is on the call result, not the string). `Input` removes all automation and preserves parentheses only if they were present in input code: consistency is not enforced. |
 | `space_after_function_names` | `Never`            | Specify whether to add a space between the function name and parentheses. Possible options: `Never`, `Definitions`, `Calls`, or `Always`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `block_newline_gaps`         | `Never`            | Specify whether to preserve leading and trailing newline gaps for blocks. Possible options: `Never`, `Preserve`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| `collapse_simple_statement`  | `Never`            | Specify whether to collapse simple statements. Possible options: `Never`, `FunctionOnly`, `ConditionalOnly`, or `Always`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `collapse_simple_statement`  | `Never`            | Specify whether to collapse simple statements. Possible options: `Never`, `Input`, `FunctionOnly`, `ConditionalOnly`, or `Always`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 Default `stylua.toml`, note you do not need to explicitly specify each option if you want to use the defaults:
 
